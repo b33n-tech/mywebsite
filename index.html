@@ -1,139 +1,197 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scrap this Paper!</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  /* --- Global --- */
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Inter',sans-serif; background:#f0f3f7; color:#333; padding:30px; }
-  h1 { text-align:center; font-size:2.8em; margin-bottom:30px; color:#1f2937; }
-  
-  /* --- Search bar & Filters --- */
-  #searchBar { width:100%; max-width:600px; margin:0 auto 20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
-  #searchBar input, #searchBar select {
-    flex:1; padding:10px 15px; border-radius:8px; border:none; font-size:1em;
-  }
-  #searchBar button { padding:10px 15px; border:none; border-radius:8px; background:#6366f1; color:#fff; font-weight:600; cursor:pointer; }
-  #searchBar button:hover { background:#4f46e5; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where's My Paper?</title>
+  <style>
+    /* ----- Reset & Global ----- */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: #f9f9f9; color: #222; line-height: 1.6; }
+    a { text-decoration: none; color: #1a73e8; }
+    a:hover { text-decoration: underline; }
+    h1, h2, h3 { margin-bottom: 0.5rem; }
+    p { margin-bottom: 1rem; }
 
-  /* --- Grid Layout --- */
-  .grid { display:grid; grid-template-columns:1fr; gap:25px; margin-top:20px; }
-  @media(min-width:900px) { .grid { grid-template-columns:repeat(3,1fr); } }
+    /* ----- Header / Hero ----- */
+    header {
+      background: #1a73e8;
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+    header h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 1rem; }
+    header p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
 
-  /* --- Section Cards --- */
-  .section { padding:25px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.08); background:#fff; transition:transform 0.2s, box-shadow 0.2s; }
-  .section:hover { transform:translateY(-5px); box-shadow:0 15px 35px rgba(0,0,0,0.12); }
-  h2 { margin-bottom:20px; font-size:1.6em; color:#111827; border-bottom:3px solid rgba(0,0,0,0.1); padding-bottom:5px; }
+    /* ----- Navigation / Sections ----- */
+    nav {
+      background: #fff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    nav a { font-weight: 600; color: #222; }
+    nav a:hover { color: #1a73e8; }
 
-  /* --- Cards --- */
-  .card { background:#f9fafb; border-radius:10px; padding:15px 20px; margin-bottom:15px; transition:transform 0.2s, box-shadow 0.2s; }
-  .card:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.12); }
-  .card a { text-decoration:none; color:#6366f1; font-weight:600; }
-  .tags { margin-top:5px; font-size:0.85em; color:#555; }
+    section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
 
-</style>
+    /* ----- Search & Filter ----- */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+      justify-content: center;
+    }
+    .controls input, .controls select {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      min-width: 200px;
+    }
+
+    /* ----- Cards ----- */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 20px; }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card h3 { margin-bottom: 10px; }
+    .card p { font-size: 0.95rem; color: #555; }
+    .card a.button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #1a73e8;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+    .card a.button:hover { background: #155ab6; }
+
+    /* ----- Footer ----- */
+    footer { text-align: center; padding: 20px; font-size: 0.9rem; color: #777; }
+  </style>
 </head>
 <body>
 
-<h1>Scrap this Paper: If Google had Time Travel</h1> 
-<!-- Search and Year Filter -->
-<div id="searchBar">
-  <input type="text" id="searchInput" placeholder="Rechercher un titre, auteur ou tag..." />
-  <select id="yearFilter">
-    <option value="">Toutes les périodes</option>
-    <option value="1800-1850">1800-1850</option>
-    <option value="1851-1900">1851-1900</option>
-    <option value="1901-1950">1901-1950</option>
-    <option value="1951-2000">1951-2000</option>
-    <option value="2001-2050">2001-2050</option>
-  </select>
-  <button onclick="applyFilters()">🔍 Filtrer</button>
-</div>
+  <!-- Hero -->
+  <header>
+    <h1>Where's My Paper?</h1>
+    <h2>The panic-free search for historical knowledge</h2>
+    <p>Spent the whole afternoon chasing an article you <em>know</em> exists? We’ve been there. That’s why we’re here.</p>
+  </header>
 
-<div class="grid">
-  <!-- Section 1: Catalogues d’œuvres -->
-  <section class="section" id="catalogues">
-    <h2>Catalogues d’œuvres</h2>
-    <div id="cataloguesContainer"></div>
+  <!-- Navigation -->
+  <nav>
+    <a href="#cheatsheet">Cheat Sheet</a>
+    <a href="#meta">Meta Resources</a>
+    <a href="#reports">Reports/Studies</a>
+    <a href="#transverse">Transverse Resources</a>
+  </nav>
+
+  <!-- Cheat Sheet -->
+  <section id="cheatsheet">
+    <h2>Cheat Sheet (Databases)</h2>
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search by author, title, tag...">
+      <select id="yearFilter">
+        <option value="">Filter by period</option>
+        <option value="1800-1850">1800–1850</option>
+        <option value="1850-1900">1850–1900</option>
+        <option value="1900-1950">1900–1950</option>
+        <option value="1950-2000">1950–2000</option>
+        <option value="2000-2050">2000–2050</option>
+      </select>
+    </div>
+    <div class="cards" id="cheatCards">
+      <!-- Example card -->
+      <div class="card" data-year="1845" data-tags="history,journal">
+        <h3>Title of Journal 1</h3>
+        <p>Author Name • 1845</p>
+        <a href="#" class="button" target="_blank">View Database</a>
+      </div>
+      <div class="card" data-year="1920" data-tags="literature,review">
+        <h3>Title of Journal 2</h3>
+        <p>Author Name • 1920</p>
+        <a href="#" class="button" target="_blank">View Database</a>
+      </div>
+      <!-- Add more cards here -->
+    </div>
   </section>
 
-  <!-- Section 2: Revues académiques -->
-  <section class="section" id="revues">
-    <h2>Revues académiques</h2>
-    <div id="revuesContainer"></div>
+  <!-- Meta Resources -->
+  <section id="meta">
+    <h2>Meta Resources</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Workflow Documentation</h3>
+        <p>Description of data processing methods, tips, and annotations.</p>
+        <a href="#" class="button" target="_blank">View PDF</a>
+      </div>
+    </div>
   </section>
 
-  <!-- Section 3: Communications -->
-  <section class="section" id="communications">
-    <h2>Communications</h2>
-    <div id="communicationsContainer"></div>
+  <!-- Reports / Studies -->
+  <section id="reports">
+    <h2>Reports & Studies</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Analysis Report 2023</h3>
+        <p>Insights and findings from the database project.</p>
+        <a href="#" class="button" target="_blank">View PDF</a>
+      </div>
+    </div>
   </section>
-</div>
 
-<script>
-  // --- Exemple de données JSON ---
-  const catalogues = [
-    {title:"Œuvre 1", author:"Henri Focillon", tags:["Peinture","XIXe"], year:1823, link:"fichier1.xlsx"},
-    {title:"Œuvre 2", author:"Jurgis Baltrusaïtis", tags:["Sculpture"], year:1890, link:"fichier2.xlsx"},
-    {title:"Œuvre 3", author:"Emile Mâle", tags:["Photographie"], year:2005, link:"fichier3.xlsx"}
-  ];
+  <!-- Transverse Resources -->
+  <section id="transverse">
+    <h2>Transverse Resources</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Societies & Data Governance</h3>
+        <p>Comparative study on archival practices across countries.</p>
+        <a href="#" class="button" target="_blank">View PDF</a>
+      </div>
+    </div>
+  </section>
 
-  const revues = [
-    {title:"Article 1", author:"Chercheur A", tags:["Histoire","Art"], year:1910, link:"revue1.pdf"},
-    {title:"Article 2", author:"Chercheur B", tags:["Philosophie"], year:1985, link:"revue2.pdf"},
-    {title:"Article 3", author:"Chercheur C", tags:["Sociologie"], year:2020, link:"revue3.pdf"}
-  ];
+  <footer>
+    &copy; 2025 Where's My Paper? | Powered by STPIFGHTT
+  </footer>
 
-  const communications = [
-    {title:"Note 1", tags:["Communication interne"], year:2015, link:"comm1.pdf"},
-    {title:"Note 2", tags:["Annonce"], year:2000, link:"comm2.pdf"}
-  ];
+  <script>
+    // Search + Year Filter
+    const searchInput = document.getElementById('searchInput');
+    const yearFilter = document.getElementById('yearFilter');
+    const cheatCards = document.getElementById('cheatCards').children;
 
-  // --- Fonction pour afficher les cartes ---
-  function renderItems(items, containerId) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = "";
-    items.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>
-                        <div class="tags">${item.author ? item.author + " | " : ""}${item.tags.join(", ")} | ${item.year}</div>`;
-      container.appendChild(card);
-    });
-  }
-
-  // --- Initial render ---
-  renderItems(catalogues, "cataloguesContainer");
-  renderItems(revues, "revuesContainer");
-  renderItems(communications, "communicationsContainer");
-
-  // --- Filtre combiné (search + year) ---
-  function applyFilters() {
-    const query = document.getElementById("searchInput").value.toLowerCase();
-    const yearRange = document.getElementById("yearFilter").value;
-
-    function filter(arr) {
-      return arr.filter(item => {
-        const matchesQuery = item.title.toLowerCase().includes(query) ||
-                             (item.author && item.author.toLowerCase().includes(query)) ||
-                             item.tags.some(tag => tag.toLowerCase().includes(query));
-        let matchesYear = true;
-        if(yearRange) {
-          const [start,end] = yearRange.split("-").map(Number);
-          matchesYear = item.year >= start && item.year <= end;
-        }
-        return matchesQuery && matchesYear;
+    function filterCards() {
+      const searchText = searchInput.value.toLowerCase();
+      const selectedYear = yearFilter.value;
+      Array.from(cheatCards).forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const tags = card.dataset.tags.toLowerCase();
+        const year = card.dataset.year;
+        const matchesSearch = title.includes(searchText) || tags.includes(searchText);
+        const matchesYear = !selectedYear || selectedYear.split('-')[0] <= year && year <= selectedYear.split('-')[1];
+        card.style.display = (matchesSearch && matchesYear) ? 'block' : 'none';
       });
     }
 
-    renderItems(filter(catalogues), "cataloguesContainer");
-    renderItems(filter(revues), "revuesContainer");
-    renderItems(filter(communications), "communicationsContainer");
-  }
-</script>
-
+    searchInput.addEventListener('input', filterCards);
+    yearFilter.addEventListener('change', filterCards);
+  </script>
 </body>
 </html>
