@@ -7,24 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   /* --- Global --- */
-  * { box-sizing: border-box; margin:0; padding:0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:'Inter',sans-serif; background:#f0f3f7; color:#333; padding:30px; }
-  h1 { text-align:center; font-size:2.8em; margin-bottom:40px; color:#1f2937; }
-
-  /* --- Search bar --- */
-  #searchBar { width:100%; max-width:500px; margin:0 auto 40px; display:flex; }
-  #searchBar input {
-    flex:1; padding:10px 15px; border-radius:8px 0 0 8px; border:none; font-size:1em;
+  h1 { text-align:center; font-size:2.8em; margin-bottom:30px; color:#1f2937; }
+  
+  /* --- Search bar & Filters --- */
+  #searchBar { width:100%; max-width:600px; margin:0 auto 20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  #searchBar input, #searchBar select {
+    flex:1; padding:10px 15px; border-radius:8px; border:none; font-size:1em;
   }
-  #searchBar button {
-    padding:10px 15px; border:none; border-radius:0 8px 8px 0; background:#6366f1; color:#fff; font-weight:600; cursor:pointer;
-  }
+  #searchBar button { padding:10px 15px; border:none; border-radius:8px; background:#6366f1; color:#fff; font-weight:600; cursor:pointer; }
   #searchBar button:hover { background:#4f46e5; }
 
-  /* --- Section Cards --- */
-  .grid { display:grid; grid-template-columns:1fr; gap:25px; }
+  /* --- Grid Layout --- */
+  .grid { display:grid; grid-template-columns:1fr; gap:25px; margin-top:20px; }
   @media(min-width:900px) { .grid { grid-template-columns:repeat(3,1fr); } }
 
+  /* --- Section Cards --- */
   .section { padding:25px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.08); background:#fff; transition:transform 0.2s, box-shadow 0.2s; }
   .section:hover { transform:translateY(-5px); box-shadow:0 15px 35px rgba(0,0,0,0.12); }
   h2 { margin-bottom:20px; font-size:1.6em; color:#111827; border-bottom:3px solid rgba(0,0,0,0.1); padding-bottom:5px; }
@@ -41,10 +40,18 @@
 
 <h1>Hub Œuvres & Revues MVP</h1>
 
-<!-- Search -->
+<!-- Search and Year Filter -->
 <div id="searchBar">
-  <input type="text" id="searchInput" placeholder="Rechercher un titre, auteur, tag..." />
-  <button onclick="filterItems()">🔍</button>
+  <input type="text" id="searchInput" placeholder="Rechercher un titre, auteur ou tag..." />
+  <select id="yearFilter">
+    <option value="">Toutes les périodes</option>
+    <option value="1800-1850">1800-1850</option>
+    <option value="1851-1900">1851-1900</option>
+    <option value="1901-1950">1901-1950</option>
+    <option value="1951-2000">1951-2000</option>
+    <option value="2001-2050">2001-2050</option>
+  </select>
+  <button onclick="applyFilters()">🔍 Filtrer</button>
 </div>
 
 <div class="grid">
@@ -70,18 +77,20 @@
 <script>
   // --- Exemple de données JSON ---
   const catalogues = [
-    {title:"Œuvre 1", author:"Auteur A", tags:["Peinture","XIXe"], link:"fichier1.xlsx"},
-    {title:"Œuvre 2", author:"Auteur B", tags:["Sculpture"], link:"fichier2.xlsx"}
+    {title:"Œuvre 1", author:"Auteur A", tags:["Peinture","XIXe"], year:1823, link:"fichier1.xlsx"},
+    {title:"Œuvre 2", author:"Auteur B", tags:["Sculpture"], year:1890, link:"fichier2.xlsx"},
+    {title:"Œuvre 3", author:"Auteur C", tags:["Photographie"], year:2005, link:"fichier3.xlsx"}
   ];
 
   const revues = [
-    {title:"Article 1", author:"Chercheur A", tags:["Histoire","Art"], link:"revue1.pdf"},
-    {title:"Article 2", author:"Chercheur B", tags:["Philosophie"], link:"revue2.pdf"}
+    {title:"Article 1", author:"Chercheur A", tags:["Histoire","Art"], year:1910, link:"revue1.pdf"},
+    {title:"Article 2", author:"Chercheur B", tags:["Philosophie"], year:1985, link:"revue2.pdf"},
+    {title:"Article 3", author:"Chercheur C", tags:["Sociologie"], year:2020, link:"revue3.pdf"}
   ];
 
   const communications = [
-    {title:"Note 1", tags:["Communication interne"], link:"comm1.pdf"},
-    {title:"Note 2", tags:["Annonce"], link:"comm2.pdf"}
+    {title:"Note 1", tags:["Communication interne"], year:2015, link:"comm1.pdf"},
+    {title:"Note 2", tags:["Annonce"], year:2000, link:"comm2.pdf"}
   ];
 
   // --- Fonction pour afficher les cartes ---
@@ -92,7 +101,7 @@
       const card = document.createElement("div");
       card.className = "card";
       card.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>
-                        <div class="tags">${item.author ? item.author + " | " : ""}${item.tags.join(", ")}</div>`;
+                        <div class="tags">${item.author ? item.author + " | " : ""}${item.tags.join(", ")} | ${item.year}</div>`;
       container.appendChild(card);
     });
   }
@@ -102,16 +111,25 @@
   renderItems(revues, "revuesContainer");
   renderItems(communications, "communicationsContainer");
 
-  // --- Search/Filter ---
-  function filterItems() {
+  // --- Filtre combiné (search + year) ---
+  function applyFilters() {
     const query = document.getElementById("searchInput").value.toLowerCase();
+    const yearRange = document.getElementById("yearFilter").value;
+
     function filter(arr) {
-      return arr.filter(item =>
-        item.title.toLowerCase().includes(query) ||
-        (item.author && item.author.toLowerCase().includes(query)) ||
-        item.tags.some(tag => tag.toLowerCase().includes(query))
-      );
+      return arr.filter(item => {
+        const matchesQuery = item.title.toLowerCase().includes(query) ||
+                             (item.author && item.author.toLowerCase().includes(query)) ||
+                             item.tags.some(tag => tag.toLowerCase().includes(query));
+        let matchesYear = true;
+        if(yearRange) {
+          const [start,end] = yearRange.split("-").map(Number);
+          matchesYear = item.year >= start && item.year <= end;
+        }
+        return matchesQuery && matchesYear;
+      });
     }
+
     renderItems(filter(catalogues), "cataloguesContainer");
     renderItems(filter(revues), "revuesContainer");
     renderItems(filter(communications), "communicationsContainer");
