@@ -1,86 +1,40 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Where's My Paper?</title>
+  <title>Où est mon papier ?</title>
   <style>
-    /* ----- Reset & Global ----- */
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background: #f9f9f9; color: #222; line-height: 1.6; }
     a { text-decoration: none; color: #1a73e8; }
     a:hover { text-decoration: underline; }
-    h1, h2, h3 { margin-bottom: 0.5rem; }
+    h1,h2,h3 { margin-bottom: 0.5rem; }
     p { margin-bottom: 1rem; }
 
-    /* ----- Header / Hero ----- */
-    header {
-      background: #1a73e8;
-      color: #fff;
-      padding: 60px 20px;
-      text-align: center;
-    }
+    header { background: #1a73e8; color: #fff; padding: 60px 20px; text-align: center; }
     header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
     header h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 1rem; }
     header p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
 
-    /* ----- Navigation / Sections ----- */
-    nav {
-      background: #fff;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      position: sticky;
-      top: 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
+    nav { background: #fff; padding: 10px 20px; display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000; }
     nav a { font-weight: 600; color: #222; }
     nav a:hover { color: #1a73e8; }
 
     section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
 
-    /* ----- Search & Filter ----- */
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 30px;
-      justify-content: center;
-    }
-    .controls input, .controls select {
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      min-width: 200px;
-    }
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; justify-content: center; }
+    .controls input, .controls select { padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 5px; min-width: 200px; }
 
-    /* ----- Cards ----- */
     .cards { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 20px; }
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
+    .card { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s; }
     .card:hover { transform: translateY(-5px); }
     .card h3 { margin-bottom: 10px; }
     .card p { font-size: 0.95rem; color: #555; }
-    .card a.button {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: #1a73e8;
-      color: #fff;
-      border-radius: 5px;
-      font-size: 0.9rem;
-    }
+    .card a.button { display: inline-block; margin-top: 10px; padding: 8px 12px; background: #1a73e8; color: #fff; border-radius: 5px; font-size: 0.9rem; }
     .card a.button:hover { background: #155ab6; }
 
-    /* ----- Footer ----- */
     footer { text-align: center; padding: 20px; font-size: 0.9rem; color: #777; }
   </style>
 </head>
@@ -88,26 +42,27 @@
 
   <!-- Hero -->
   <header>
-    <h1>Where's My Paper?</h1>
-    <h2>The panic-free search for historical knowledge</h2>
-    <p>Spent the whole afternoon chasing an article you <em>know</em> exists? We’ve been there. That’s why we’re here.</p>
+    <h1>Où est mon papier ?</h1>
+    <h2>La recherche sans panique du savoir historique</h2>
+    <p>Vous avez passé l'après-midi à chercher un article que vous savez exister ? On sait. C'est pour ça qu'on existe.</p>
+    <p><a href="en.html" style="color:#fff; font-weight:bold;">English version →</a></p>
   </header>
 
   <!-- Navigation -->
   <nav>
     <a href="#cheatsheet">Cheat Sheet</a>
-    <a href="#meta">Meta Resources</a>
-    <a href="#reports">Reports/Studies</a>
-    <a href="#transverse">Transverse Resources</a>
+    <a href="#meta">Ressources Méta</a>
+    <a href="#reports">Rapports / Études</a>
+    <a href="#transverse">Ressources Transverses</a>
   </nav>
 
   <!-- Cheat Sheet -->
   <section id="cheatsheet">
-    <h2>Cheat Sheet (Databases)</h2>
+    <h2>Cheat Sheet (Bases de données)</h2>
     <div class="controls">
-      <input type="text" id="searchInput" placeholder="Search by author, title, tag...">
+      <input type="text" id="searchInput" placeholder="Recherche par auteur, titre, tag...">
       <select id="yearFilter">
-        <option value="">Filter by period</option>
+        <option value="">Filtrer par période</option>
         <option value="1800-1850">1800–1850</option>
         <option value="1850-1900">1850–1900</option>
         <option value="1900-1950">1900–1950</option>
@@ -116,63 +71,60 @@
       </select>
     </div>
     <div class="cards" id="cheatCards">
-      <!-- Example card -->
-      <div class="card" data-year="1845" data-tags="history,journal">
-        <h3>Le Journal des Savants</h3>
-        <p>Author Name • 1845</p>
-        <a href="#" class="button" target="_blank">View Database</a>
+      <div class="card" data-year="1845" data-tags="histoire,journal">
+        <h3>Titre du Journal 1</h3>
+        <p>Auteur • 1845</p>
+        <a href="#" class="button" target="_blank">Voir la base</a>
       </div>
-      <div class="card" data-year="1920" data-tags="literature,review">
-        <h3>La Revue des Deux-Mondes</h3>
-        <p>Author Name • 1920</p>
-        <a href="#" class="button" target="_blank">View Database</a>
+      <div class="card" data-year="1920" data-tags="littérature,revue">
+        <h3>Titre du Journal 2</h3>
+        <p>Auteur • 1920</p>
+        <a href="#" class="button" target="_blank">Voir la base</a>
       </div>
-      <!-- Add more cards here -->
     </div>
   </section>
 
   <!-- Meta Resources -->
   <section id="meta">
-    <h2>Meta Resources</h2>
+    <h2>Ressources Méta</h2>
     <div class="cards">
       <div class="card">
-        <h3>Workflow Documentation</h3>
-        <p>Description of data processing methods, tips, and annotations.</p>
-        <a href="#" class="button" target="_blank">View PDF</a>
+        <h3>Documentation du Workflow</h3>
+        <p>Description des méthodes de traitement des données et annotations.</p>
+        <a href="#" class="button" target="_blank">Voir PDF</a>
       </div>
     </div>
   </section>
 
   <!-- Reports / Studies -->
   <section id="reports">
-    <h2>Reports & Studies</h2>
+    <h2>Rapports & Études</h2>
     <div class="cards">
       <div class="card">
-        <h3>Analysis Report 2023</h3>
-        <p>Insights and findings from the database project.</p>
-        <a href="#" class="button" target="_blank">View PDF</a>
+        <h3>Rapport 2023</h3>
+        <p>Insights et résultats issus du projet de bases de données.</p>
+        <a href="#" class="button" target="_blank">Voir PDF</a>
       </div>
     </div>
   </section>
 
   <!-- Transverse Resources -->
   <section id="transverse">
-    <h2>Transverse Resources</h2>
+    <h2>Ressources Transverses</h2>
     <div class="cards">
       <div class="card">
-        <h3>Societies & Data Governance</h3>
-        <p>Comparative study on archival practices across countries.</p>
-        <a href="#" class="button" target="_blank">View PDF</a>
+        <h3>Sociétés & Gouvernance des données</h3>
+        <p>Étude comparative des pratiques archivistiques par pays.</p>
+        <a href="#" class="button" target="_blank">Voir PDF</a>
       </div>
     </div>
   </section>
 
   <footer>
-    &copy; 2025 Where's My Paper? | Powered by STPIFGHTT
+    &copy; 2025 Où est mon papier ? | Propulsé par STPIFGHTT
   </footer>
 
   <script>
-    // Search + Year Filter
     const searchInput = document.getElementById('searchInput');
     const yearFilter = document.getElementById('yearFilter');
     const cheatCards = document.getElementById('cheatCards').children;
