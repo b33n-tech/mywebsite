@@ -1,136 +1,99 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hub de Ressources</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Global Styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f0f2f5;
-      color: #333;
-      line-height: 1.6;
-      padding: 40px 20px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2.8em;
-      margin-bottom: 50px;
-      color: #1f2937;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub Fun & Dynamique</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* --- Global Styles --- */
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { font-family: 'Inter', sans-serif; background: #f0f3f7; color: #333; line-height: 1.6; padding: 40px 20px; }
+  h1 { text-align:center; font-size:3em; margin-bottom:50px; color:#1f2937; }
 
-    /* Section Styles */
-    .section {
-      background: #fff;
-      padding: 30px 25px;
-      margin-bottom: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .section:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.12);
-    }
-    h2 {
-      font-size: 1.8em;
-      margin-bottom: 20px;
-      color: #111827;
-      border-bottom: 3px solid #6366f1;
-      display: inline-block;
-      padding-bottom: 5px;
-    }
+  /* --- Grid Layout --- */
+  .grid { display:grid; grid-template-columns:1fr; gap:25px; }
+  @media(min-width:900px) { .grid { grid-template-columns:repeat(3,1fr); } }
 
-    /* List Styles */
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    li {
-      margin-bottom: 15px;
-    }
-    a {
-      display: inline-block;
-      text-decoration: none;
-      color: #6366f1;
-      background: #e0e7ff;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: background 0.3s, transform 0.2s;
-      font-weight: 500;
-    }
-    a:hover {
-      background: #6366f1;
-      color: #fff;
-      transform: translateY(-2px);
-    }
+  /* --- Section Cards --- */
+  .section { 
+    padding:30px; 
+    border-radius:20px; 
+    box-shadow:0 15px 30px rgba(0,0,0,0.1); 
+    transition:transform 0.2s, box-shadow 0.2s; 
+  }
+  .section:hover { transform: translateY(-5px); box-shadow:0 20px 40px rgba(0,0,0,0.15); }
+  
+  #cheatsheet { background: linear-gradient(135deg, #f9f7fd, #e0e7ff); }
+  #ressources { background: linear-gradient(135deg, #fff8f0, #ffe0b2); }
+  #communications { background: linear-gradient(135deg, #f0fff4, #b2ffd8); }
 
-    /* Responsive Grid for Sections */
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-    @media(min-width: 900px) {
-      .grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+  h2 { font-size:1.8em; margin-bottom:20px; color:#111827; border-bottom:3px solid rgba(0,0,0,0.1); padding-bottom:5px; }
 
-    /* Section icons */
-    .section h2::before {
-      content: "📁 ";
-      font-size: 1.2em;
-    }
-    #cheatsheet h2::before { content: "📊 "; }
-    #ressources h2::before { content: "📚 "; }
-    #communications h2::before { content: "💬 "; }
+  /* --- Links as Buttons --- */
+  ul { list-style:none; padding-left:0; }
+  li { margin-bottom:15px; }
+  a { 
+    display:inline-block; 
+    text-decoration:none; 
+    padding:12px 20px; 
+    border-radius:12px; 
+    font-weight:600; 
+    color:#fff; 
+    transition: transform 0.2s, box-shadow 0.2s; 
+  }
+  a.excel { background:#6366f1; }
+  a.airtable { background:#10b981; }
+  a.pdf { background:#ef4444; }
+  a.web { background:#f59e0b; }
 
-  </style>
+  a:hover { transform: translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.15); }
+
+  /* --- Section Icons --- */
+  #cheatsheet h2::before { content:"📊 "; font-size:1.2em; }
+  #ressources h2::before { content:"📚 "; font-size:1.2em; }
+  #communications h2::before { content:"💬 "; font-size:1.2em; }
+
+</style>
 </head>
 <body>
 
-  <h1>Hub de Ressources</h1>
+<h1>Hub Fun & Dynamique</h1>
 
-  <div class="grid">
-    <!-- Section 1: Cheat Sheet -->
-    <section class="section" id="cheatsheet">
-      <h2>Cheat Sheet</h2>
-      <ul>
-        <li><a href="fichier1.xlsx" target="_blank">Fichier Excel 1</a></li>
-        <li><a href="fichier2.xlsx" target="_blank">Fichier Excel 2</a></li>
-        <li><a href="https://airtable.com/EXEMPLE1" target="_blank">Base Airtable 1</a></li>
-        <li><a href="https://airtable.com/EXEMPLE2" target="_blank">Base Airtable 2</a></li>
-      </ul>
-    </section>
+<div class="grid">
 
-    <!-- Section 2: Ressources -->
-    <section class="section" id="ressources">
-      <h2>Ressources</h2>
-      <ul>
-        <li><a href="rapport1.pdf" target="_blank">Rapport PDF 1</a></li>
-        <li><a href="rapport2.pdf" target="_blank">Rapport PDF 2</a></li>
-        <li><a href="etude1.pdf" target="_blank">Étude PDF 1</a></li>
-      </ul>
-    </section>
+  <!-- Cheat Sheet Section -->
+  <section class="section" id="cheatsheet">
+    <h2>Cheat Sheet</h2>
+    <ul>
+      <li><a href="fichier1.xlsx" target="_blank" class="excel">Fichier Excel 1</a></li>
+      <li><a href="fichier2.xlsx" target="_blank" class="excel">Fichier Excel 2</a></li>
+      <li><a href="https://airtable.com/EXEMPLE1" target="_blank" class="airtable">Base Airtable 1</a></li>
+      <li><a href="https://airtable.com/EXEMPLE2" target="_blank" class="airtable">Base Airtable 2</a></li>
+    </ul>
+  </section>
 
-    <!-- Section 3: Communications -->
-    <section class="section" id="communications">
-      <h2>Communications</h2>
-      <ul>
-        <li><a href="communication1.pdf" target="_blank">Communication 1</a></li>
-        <li><a href="communication2.pdf" target="_blank">Communication 2</a></li>
-        <li><a href="https://example.com/comm3" target="_blank">Communication 3 (Lien web)</a></li>
-      </ul>
-    </section>
-  </div>
+  <!-- Ressources Section -->
+  <section class="section" id="ressources">
+    <h2>Ressources</h2>
+    <ul>
+      <li><a href="rapport1.pdf" target="_blank" class="pdf">Rapport PDF 1</a></li>
+      <li><a href="rapport2.pdf" target="_blank" class="pdf">Rapport PDF 2</a></li>
+      <li><a href="etude1.pdf" target="_blank" class="pdf">Étude PDF 1</a></li>
+    </ul>
+  </section>
+
+  <!-- Communications Section -->
+  <section class="section" id="communications">
+    <h2>Communications</h2>
+    <ul>
+      <li><a href="communication1.pdf" target="_blank" class="pdf">Communication 1</a></li>
+      <li><a href="communication2.pdf" target="_blank" class="pdf">Communication 2</a></li>
+      <li><a href="https://example.com/comm3" target="_blank" class="web">Communication 3 (Lien web)</a></li>
+    </ul>
+  </section>
+
+</div>
 
 </body>
 </html>
