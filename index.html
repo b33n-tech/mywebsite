@@ -3,97 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hub Fun & Dynamique</title>
+<title>Hub Œuvres & Revues MVP</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  /* --- Global Styles --- */
+  /* --- Global --- */
   * { box-sizing: border-box; margin:0; padding:0; }
-  body { font-family: 'Inter', sans-serif; background: #f0f3f7; color: #333; line-height: 1.6; padding: 40px 20px; }
-  h1 { text-align:center; font-size:3em; margin-bottom:50px; color:#1f2937; }
+  body { font-family:'Inter',sans-serif; background:#f0f3f7; color:#333; padding:30px; }
+  h1 { text-align:center; font-size:2.8em; margin-bottom:40px; color:#1f2937; }
 
-  /* --- Grid Layout --- */
+  /* --- Search bar --- */
+  #searchBar { width:100%; max-width:500px; margin:0 auto 40px; display:flex; }
+  #searchBar input {
+    flex:1; padding:10px 15px; border-radius:8px 0 0 8px; border:none; font-size:1em;
+  }
+  #searchBar button {
+    padding:10px 15px; border:none; border-radius:0 8px 8px 0; background:#6366f1; color:#fff; font-weight:600; cursor:pointer;
+  }
+  #searchBar button:hover { background:#4f46e5; }
+
+  /* --- Section Cards --- */
   .grid { display:grid; grid-template-columns:1fr; gap:25px; }
   @media(min-width:900px) { .grid { grid-template-columns:repeat(3,1fr); } }
 
-  /* --- Section Cards --- */
-  .section { 
-    padding:30px; 
-    border-radius:20px; 
-    box-shadow:0 15px 30px rgba(0,0,0,0.1); 
-    transition:transform 0.2s, box-shadow 0.2s; 
-  }
-  .section:hover { transform: translateY(-5px); box-shadow:0 20px 40px rgba(0,0,0,0.15); }
-  
-  #cheatsheet { background: linear-gradient(135deg, #f9f7fd, #e0e7ff); }
-  #ressources { background: linear-gradient(135deg, #fff8f0, #ffe0b2); }
-  #communications { background: linear-gradient(135deg, #f0fff4, #b2ffd8); }
+  .section { padding:25px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.08); background:#fff; transition:transform 0.2s, box-shadow 0.2s; }
+  .section:hover { transform:translateY(-5px); box-shadow:0 15px 35px rgba(0,0,0,0.12); }
+  h2 { margin-bottom:20px; font-size:1.6em; color:#111827; border-bottom:3px solid rgba(0,0,0,0.1); padding-bottom:5px; }
 
-  h2 { font-size:1.8em; margin-bottom:20px; color:#111827; border-bottom:3px solid rgba(0,0,0,0.1); padding-bottom:5px; }
-
-  /* --- Links as Buttons --- */
-  ul { list-style:none; padding-left:0; }
-  li { margin-bottom:15px; }
-  a { 
-    display:inline-block; 
-    text-decoration:none; 
-    padding:12px 20px; 
-    border-radius:12px; 
-    font-weight:600; 
-    color:#fff; 
-    transition: transform 0.2s, box-shadow 0.2s; 
-  }
-  a.excel { background:#6366f1; }
-  a.airtable { background:#10b981; }
-  a.pdf { background:#ef4444; }
-  a.web { background:#f59e0b; }
-
-  a:hover { transform: translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.15); }
-
-  /* --- Section Icons --- */
-  #cheatsheet h2::before { content:"📊 "; font-size:1.2em; }
-  #ressources h2::before { content:"📚 "; font-size:1.2em; }
-  #communications h2::before { content:"💬 "; font-size:1.2em; }
+  /* --- Cards --- */
+  .card { background:#f9fafb; border-radius:10px; padding:15px 20px; margin-bottom:15px; transition:transform 0.2s, box-shadow 0.2s; }
+  .card:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.12); }
+  .card a { text-decoration:none; color:#6366f1; font-weight:600; }
+  .tags { margin-top:5px; font-size:0.85em; color:#555; }
 
 </style>
 </head>
 <body>
 
-<h1>Hub Fun & Dynamique</h1>
+<h1>Hub Œuvres & Revues MVP</h1>
+
+<!-- Search -->
+<div id="searchBar">
+  <input type="text" id="searchInput" placeholder="Rechercher un titre, auteur, tag..." />
+  <button onclick="filterItems()">🔍</button>
+</div>
 
 <div class="grid">
-
-  <!-- Cheat Sheet Section -->
-  <section class="section" id="cheatsheet">
-    <h2>Cheat Sheet</h2>
-    <ul>
-      <li><a href="fichier1.xlsx" target="_blank" class="excel">Fichier Excel 1</a></li>
-      <li><a href="fichier2.xlsx" target="_blank" class="excel">Fichier Excel 2</a></li>
-      <li><a href="https://airtable.com/EXEMPLE1" target="_blank" class="airtable">Base Airtable 1</a></li>
-      <li><a href="https://airtable.com/EXEMPLE2" target="_blank" class="airtable">Base Airtable 2</a></li>
-    </ul>
+  <!-- Section 1: Catalogues d’œuvres -->
+  <section class="section" id="catalogues">
+    <h2>Catalogues d’œuvres</h2>
+    <div id="cataloguesContainer"></div>
   </section>
 
-  <!-- Ressources Section -->
-  <section class="section" id="ressources">
-    <h2>Ressources</h2>
-    <ul>
-      <li><a href="rapport1.pdf" target="_blank" class="pdf">Rapport PDF 1</a></li>
-      <li><a href="rapport2.pdf" target="_blank" class="pdf">Rapport PDF 2</a></li>
-      <li><a href="etude1.pdf" target="_blank" class="pdf">Étude PDF 1</a></li>
-    </ul>
+  <!-- Section 2: Revues académiques -->
+  <section class="section" id="revues">
+    <h2>Revues académiques</h2>
+    <div id="revuesContainer"></div>
   </section>
 
-  <!-- Communications Section -->
+  <!-- Section 3: Communications -->
   <section class="section" id="communications">
     <h2>Communications</h2>
-    <ul>
-      <li><a href="communication1.pdf" target="_blank" class="pdf">Communication 1</a></li>
-      <li><a href="communication2.pdf" target="_blank" class="pdf">Communication 2</a></li>
-      <li><a href="https://example.com/comm3" target="_blank" class="web">Communication 3 (Lien web)</a></li>
-    </ul>
+    <div id="communicationsContainer"></div>
   </section>
-
 </div>
+
+<script>
+  // --- Exemple de données JSON ---
+  const catalogues = [
+    {title:"Œuvre 1", author:"Auteur A", tags:["Peinture","XIXe"], link:"fichier1.xlsx"},
+    {title:"Œuvre 2", author:"Auteur B", tags:["Sculpture"], link:"fichier2.xlsx"}
+  ];
+
+  const revues = [
+    {title:"Article 1", author:"Chercheur A", tags:["Histoire","Art"], link:"revue1.pdf"},
+    {title:"Article 2", author:"Chercheur B", tags:["Philosophie"], link:"revue2.pdf"}
+  ];
+
+  const communications = [
+    {title:"Note 1", tags:["Communication interne"], link:"comm1.pdf"},
+    {title:"Note 2", tags:["Annonce"], link:"comm2.pdf"}
+  ];
+
+  // --- Fonction pour afficher les cartes ---
+  function renderItems(items, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    items.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>
+                        <div class="tags">${item.author ? item.author + " | " : ""}${item.tags.join(", ")}</div>`;
+      container.appendChild(card);
+    });
+  }
+
+  // --- Initial render ---
+  renderItems(catalogues, "cataloguesContainer");
+  renderItems(revues, "revuesContainer");
+  renderItems(communications, "communicationsContainer");
+
+  // --- Search/Filter ---
+  function filterItems() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    function filter(arr) {
+      return arr.filter(item =>
+        item.title.toLowerCase().includes(query) ||
+        (item.author && item.author.toLowerCase().includes(query)) ||
+        item.tags.some(tag => tag.toLowerCase().includes(query))
+      );
+    }
+    renderItems(filter(catalogues), "cataloguesContainer");
+    renderItems(filter(revues), "revuesContainer");
+    renderItems(filter(communications), "communicationsContainer");
+  }
+</script>
 
 </body>
 </html>
