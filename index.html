@@ -3,82 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon Hub de Ressources</title>
+  <title>Hub de Ressources</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
+      font-family: 'Inter', sans-serif;
+      background: #f0f2f5;
+      color: #333;
       line-height: 1.6;
-      background-color: #f8f8f8;
+      padding: 40px 20px;
     }
     h1 {
       text-align: center;
-      margin-bottom: 40px;
+      font-size: 2.8em;
+      margin-bottom: 50px;
+      color: #1f2937;
     }
-    section {
+
+    /* Section Styles */
+    .section {
+      background: #fff;
+      padding: 30px 25px;
       margin-bottom: 40px;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.12);
     }
     h2 {
-      color: #333;
-      border-bottom: 2px solid #ddd;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #111827;
+      border-bottom: 3px solid #6366f1;
+      display: inline-block;
       padding-bottom: 5px;
     }
+
+    /* List Styles */
     ul {
       list-style: none;
       padding-left: 0;
     }
     li {
-      margin: 10px 0;
+      margin-bottom: 15px;
     }
     a {
+      display: inline-block;
       text-decoration: none;
-      color: #0066cc;
+      color: #6366f1;
+      background: #e0e7ff;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: background 0.3s, transform 0.2s;
+      font-weight: 500;
     }
     a:hover {
-      text-decoration: underline;
+      background: #6366f1;
+      color: #fff;
+      transform: translateY(-2px);
     }
+
+    /* Responsive Grid for Sections */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media(min-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Section icons */
+    .section h2::before {
+      content: "📁 ";
+      font-size: 1.2em;
+    }
+    #cheatsheet h2::before { content: "📊 "; }
+    #ressources h2::before { content: "📚 "; }
+    #communications h2::before { content: "💬 "; }
+
   </style>
 </head>
 <body>
 
   <h1>Hub de Ressources</h1>
 
-  <!-- Section 1: Cheat Sheet -->
-  <section id="cheatsheet">
-    <h2>Cheat Sheet (fichiers xlsx + Airtable)</h2>
-    <ul>
-      <li><a href="fichier1.xlsx" target="_blank">Fichier Excel 1</a></li>
-      <li><a href="fichier2.xlsx" target="_blank">Fichier Excel 2</a></li>
-      <li><a href="https://airtable.com/EXEMPLE1" target="_blank">Base Airtable 1</a></li>
-      <li><a href="https://airtable.com/EXEMPLE2" target="_blank">Base Airtable 2</a></li>
-    </ul>
-  </section>
+  <div class="grid">
+    <!-- Section 1: Cheat Sheet -->
+    <section class="section" id="cheatsheet">
+      <h2>Cheat Sheet</h2>
+      <ul>
+        <li><a href="fichier1.xlsx" target="_blank">Fichier Excel 1</a></li>
+        <li><a href="fichier2.xlsx" target="_blank">Fichier Excel 2</a></li>
+        <li><a href="https://airtable.com/EXEMPLE1" target="_blank">Base Airtable 1</a></li>
+        <li><a href="https://airtable.com/EXEMPLE2" target="_blank">Base Airtable 2</a></li>
+      </ul>
+    </section>
 
-  <!-- Section 2: Ressources -->
-  <section id="ressources">
-    <h2>Ressources (rapports et études)</h2>
-    <ul>
-      <li><a href="rapport1.pdf" target="_blank">Rapport PDF 1</a></li>
-      <li><a href="rapport2.pdf" target="_blank">Rapport PDF 2</a></li>
-      <li><a href="etude1.pdf" target="_blank">Étude PDF 1</a></li>
-    </ul>
-  </section>
+    <!-- Section 2: Ressources -->
+    <section class="section" id="ressources">
+      <h2>Ressources</h2>
+      <ul>
+        <li><a href="rapport1.pdf" target="_blank">Rapport PDF 1</a></li>
+        <li><a href="rapport2.pdf" target="_blank">Rapport PDF 2</a></li>
+        <li><a href="etude1.pdf" target="_blank">Étude PDF 1</a></li>
+      </ul>
+    </section>
 
-  <!-- Section 3: Communications -->
-  <section id="communications">
-    <h2>Communications</h2>
-    <ul>
-      <li><a href="communication1.pdf" target="_blank">Communication 1</a></li>
-      <li><a href="communication2.pdf" target="_blank">Communication 2</a></li>
-      <li><a href="https://example.com/comm3" target="_blank">Communication 3 (Lien web)</a></li>
-    </ul>
-  </section>
+    <!-- Section 3: Communications -->
+    <section class="section" id="communications">
+      <h2>Communications</h2>
+      <ul>
+        <li><a href="communication1.pdf" target="_blank">Communication 1</a></li>
+        <li><a href="communication2.pdf" target="_blank">Communication 2</a></li>
+        <li><a href="https://example.com/comm3" target="_blank">Communication 3 (Lien web)</a></li>
+      </ul>
+    </section>
+  </div>
 
 </body>
 </html>
